@@ -13,7 +13,7 @@
     Tim Coutinho
 -}
 
-import Control.Monad (whe)
+import Control.Monad (when)
 import Data.List
 import System.IO
 import System.Random hiding (split)
