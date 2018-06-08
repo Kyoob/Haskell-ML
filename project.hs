@@ -18,6 +18,7 @@ import Data.List
 import System.IO
 import System.Random hiding (split)
 
+
 main :: IO ()
 main = do putStr "Enter HV to use the hill/valley dataset, and anything else "
           putStr "to use the breast cancer dataset: "; hFlush stdout
@@ -70,7 +71,7 @@ getData s
                           images' testing, labels' testing)
   where labels  = map ((\s -> read s :: Int) . takeWhile (/= '\r') . last) . parseCSV
         images  = map (map (\s -> read s :: Float) . init) . parseCSV
-        labels' = map ((\s -> (read s :: Int) `div` 2 - 1) . last) . parseCSV
+        labels' = map ((\s -> (read s :: Int) // 2 - 1) . last) . parseCSV
         images' = map (map (\s -> read s :: Float) . init . tail) . parseCSV
 
 -- Converts a .csv file into a list of lists, delimited at newlines and commas
@@ -137,3 +138,7 @@ doPredictions w d = do p <- getLine
                        when (p /= "q") $ do
                        print $ predict [head (normalize ((read p :: [Float]) : xs))] w
                        doPredictions w d
+
+-- I just like this better than div
+(//) :: Integral a => a -> a -> a
+(//) x y = x `div` y
